@@ -1,85 +1,7 @@
 // Add labels
 const labels = [
-  "person",
-  "bicycle",
-  "car",
-  "motorcycle",
-  "airplane",
-  "bus",
-  "train",
-  "truck",
-  "boat",
-  "traffic light",
-  "fire hydrant",
-  "stop sign",
-  "parking meter",
-  "bench",
-  "bird",
-  "cat",
-  "dog",
-  "horse",
-  "sheep",
-  "cow",
-  "elephant",
-  "bear",
-  "zebra",
-  "giraffe",
-  "backpack",
-  "umbrella",
-  "handbag",
-  "tie",
-  "suitcase",
-  "frisbee",
-  "skis",
-  "snowboard",
-  "sports ball",
-  "kite",
-  "baseball bat",
-  "baseball glove",
-  "skateboard",
-  "surfboard",
-  "tennis racket",
-  "bottle",
-  "wine glass",
-  "cup",
-  "fork",
-  "knife",
-  "spoon",
-  "bowl",
-  "banana",
-  "apple",
-  "sandwich",
-  "orange",
-  "broccoli",
-  "carrot",
-  "hot dog",
-  "pizza",
-  "donut",
-  "cake",
-  "chair",
-  "couch",
-  "potted plant",
-  "bed",
-  "dining table",
-  "toilet",
-  "tv",
-  "laptop",
-  "mouse",
-  "remote",
-  "keyboard",
-  "cell phone",
-  "microwave",
-  "oven",
-  "toaster",
-  "sink",
-  "refrigerator",
-  "book",
-  "clock",
-  "vase",
-  "scissors",
-  "teddy bear",
-  "hair drier",
-  "toothbrush",
+  "active",
+  "fatigued"
 ];
 
 // React State implementation in Vanilla JS
@@ -96,7 +18,7 @@ const [session, setSession] = useState(null);
 let mySession;
 
 // Configs
-const modelName = "yolov8n.onnx";
+const modelName = "best.onnx";
 const modelInputShape = [1, 3, 416, 416];
 const topk = 100;
 const iouThreshold = 0.45;
@@ -186,7 +108,10 @@ const renderBoxes = (canvas, boxes) => {
     const klass = labels[box.label];
     const color = colors.get(box.label);
     const score = (box.probability * 100).toFixed(1);
-    const [x1, y1, width, height] = box.bounding;
+    let [x1, y1, width, height] = box.bounding;
+
+    //flip horizontally
+    x1 = ctx.canvas.width - x1 - width;
 
     // draw box.
     ctx.fillStyle = Colors.hexToRgba(color, 0.2);
