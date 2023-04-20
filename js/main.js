@@ -25,6 +25,7 @@ const iouThreshold = 0.45;
 const scoreThreshold = 0.2;
 
 // wait until opencv.js initialized
+document.querySelector("#runInference").style.display = "block"
 cv["onRuntimeInitialized"] = async () => {
   // create session
   const [yolov8, nms] = await Promise.all([
@@ -40,7 +41,7 @@ cv["onRuntimeInitialized"] = async () => {
   await yolov8.run({ images: tensor });
 
   mySession = setSession({ net: yolov8, nms: nms });
-  
+  document.querySelector("#runInference").style.display = "block"  
 };
 
 // Detect Image Function
